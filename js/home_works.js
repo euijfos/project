@@ -26,12 +26,67 @@ function isEmailValid(value) {
 const childBlock = document.querySelector('.child_block')
 
 let positionX = 0
+let positionY = 0
 
 const moveBlock = () => {
-    if (positionX < 449){
+    if (positionX < 449  && positionY==0){
+
         positionX++
         childBlock.style.left = `${positionX}px`
+
         setTimeout(moveBlock, 10)
-    }
+    } else if (positionX == 449 && positionY < 449) {
+        positionY++
+        childBlock.style.top = `${positionY}px`
+        setTimeout(moveBlock, 10)
+    }else if (positionX > 0 && positionY == 449) {
+
+        positionX--
+        childBlock.style.left = `${positionX}px`
+        setTimeout(moveBlock, 10)
+    }else if (positionX == 0 && positionY >= 0) {
+        console.log("fff")
+        positionY--
+        childBlock.style.top = `${positionY}px`
+        setTimeout(moveBlock, 10)}
+
 }
 moveBlock()
+
+
+const start = document.querySelector('#start')
+const stop = document.querySelector('#stop')
+const reset = document.querySelector('#reset')
+let counter = 0
+let vyluch = true
+const second = document.querySelector("#seconds")
+const start1=()=>{
+    let dfdf = setInterval(()=>{
+        counter++
+        second.innerHTML = counter
+    },1000)
+
+    stop.onclick=()=>{
+        clearInterval(dfdf)
+        vyluch=true
+    }
+    reset.onclick=()=>{
+        clearInterval(dfdf)
+        vyluch=true
+        counter=0
+        second.innerHTML=0
+    }
+}
+
+
+start.onclick=()=>{
+    if(vyluch==true){
+        start1()
+        vyluch=false
+    }
+}
+
+
+
+
+
