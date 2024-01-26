@@ -99,3 +99,55 @@ converter(som, usd, eur, 'som')
 converter(usd, som, eur, 'usd')
 converter(eur, som, usd, 'eur')
 
+//card_switcher
+
+const card = document.querySelector('.card'),
+    btnNext = document.querySelector('#btn-next'),
+    btnPrev = document.querySelector('#btn-prev')
+
+let countCard = 1
+
+const cardSwitcher = async () => {
+    try {
+        const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${countCard}`)
+        const data = await response.json()
+        card.innerHTML = `
+                <p>${data.title}</p>
+                <p style="color: ${data.completed ? 'green' : 'red'}">${data.completed}</p>
+                <span>${data.id}</span>
+            `;
+    } catch (e) {
+
+    }
+}
+cardSwitcher()
+btnNext.addEventListener('click', () => {
+    countCard++;
+    if (countCard > 200) {
+        countCard = 1;
+    }
+    cardSwitcher();
+});
+
+btnPrev.addEventListener('click', () => {
+    countCard--;
+    if (countCard < 1) {
+        countCard = 200;
+    }
+    cardSwitcher();
+});
+
+
+fetch('https://jsonplaceholder.typicode.com/posts')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+    })
+    .catch(error => {
+        console.error('Fetch error:', error);
+    });
